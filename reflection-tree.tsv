@@ -1,0 +1,55 @@
+id	parentId	type	text	options	target	signal
+
+START	null	start	Good evening. Let's reflect on your day.
+
+A1_Q1	START	question	How would you describe your day in one word?	Productive|Mixed|Tough|Frustrating
+
+A1_D1	A1_Q1	decision			answer=Productive|Mixed:A1_HIGH;answer=Tough|Frustrating:A1_LOW
+
+A1_HIGH	A1_D1	question	When things went well today, what made it happen?	I took action|I planned ahead|I got lucky|Others helped
+
+A1_LOW	A1_D1	question	When things went wrong today, what was your first reaction?	I tried to fix it|I learned something|I blamed situation|I waited for help
+
+A1_HIGH_INT	A1_HIGH	reflection	You took ownership of your day. That shows strong agency.			axis1:internal
+
+A1_LOW_EXT	A1_LOW	reflection	It seems external factors influenced your day. Let's explore where you had control.			axis1:external
+
+BRIDGE_1	A1_HIGH_INT	bridge	Now let's shift from how things happened to what you contributed.		A2_Q1
+
+BRIDGE_1B	A1_LOW_EXT	bridge	Let's move from what happened to what you contributed.		A2_Q1
+
+A2_Q1	BRIDGE_1	question	Think about one interaction today. What did you focus on?	My results|Team success|Helping others|Just finishing work
+
+A2_D1	A2_Q1	decision			answer=Helping others|Team success:A2_CONTRIB;answer=My results|Just finishing work:A2_ENTITLE
+
+A2_CONTRIB	A2_D1	question	In that moment, what drove your action?	I wanted to help|I felt responsible|It was expected|I had to do it
+
+A2_ENTITLE	A2_D1	question	In that moment, what did you expect?	Recognition|Support from others|Clear instructions|Less pressure
+
+A2_CONTRIB_REF	A2_CONTRIB	reflection	You focused on contribution. This builds trust and long-term value.			axis2:contribution
+
+A2_ENTITLE_REF	A2_ENTITLE	reflection	You were focused on what you should receive. Let's widen the perspective.			axis2:entitlement
+
+BRIDGE_2	A2_CONTRIB_REF	bridge	Now let's expand your perspective beyond yourself.		A3_Q1
+
+BRIDGE_2B	A2_ENTITLE_REF	bridge	Let's expand your perspective beyond your own needs.		A3_Q1
+
+A3_Q1	BRIDGE_2	question	When you think about today's work, who comes to mind first?	Just me|My team|A specific colleague|The customer
+
+A3_D1	A3_Q1	decision			answer=Just me:A3_LOW;answer=My team|A specific colleague:A3_MID;answer=The customer:A3_HIGH
+
+A3_LOW	A3_D1	question	What was your main focus today?	My tasks|My deadlines|My performance
+
+A3_MID	A3_D1	question	How did your work impact others?	Helped team|Neutral impact|Caused delay
+
+A3_HIGH	A3_D1	question	How did your work create value for the end user?	Solved real problem|Minor improvement|No clear impact
+
+A3_LOW_REF	A3_LOW	reflection	Your focus was narrow today. Expanding your view can increase impact.			axis3:low
+
+A3_MID_REF	A3_MID	reflection	You considered others in your work. This builds collaboration.			axis3:mid
+
+A3_HIGH_REF	A3_HIGH	reflection	You focused on the end impact. This is high-leverage thinking.			axis3:high
+
+SUMMARY	A3_LOW_REF	summary	Today you leaned toward {axis1.dominant} control, {axis2.dominant} orientation, and {axis3.dominant} impact. This awareness is your starting point for improvement.
+
+END	SUMMARY	end	Reflection complete. See you tomorrow.
